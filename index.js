@@ -124,6 +124,6 @@ function getTomorrowEndTime() {
   tomorrowDate.setHours(23, 59, 59, 999);
   return tomorrowDate.getTime();
 }
-/* cron.schedule("0 0 12 * * *", async () => { */
-await login(process.env.USERMAIL, process.env.USERPASSWORD);
-/* }); */
+cron.schedule("0 0 12 * * *", async () => {
+  await login(process.env.USERMAIL, process.env.USERPASSWORD);
+});
