@@ -89,22 +89,32 @@ async function login(username, password) {
 }
 
 function unixTimeConvert() {
+  let startEndTime = { start: null, end: null };
   const today = new Date().getDay();
   let weekend = [5, 6, 7];
   if (weekend.includes(today)) {
-    console.log("booking for monday");
+    const daysToAdd = 8 - today;
+    const monday = new Date().getDate() + daysToAdd;
+    console.log(monday);
+    const bookMonday = new Date();
+    bookMonday.setDate(monday);
+    bookMonday.setHours(0, 0, 0, 0);
+    startEndTime.start = bookMonday.getTime();
+    const bookMondayEndTime = new Date();
+    bookMondayEndTime.setDate(monday);
+    bookMondayEndTime.setHours(23, 59, 59, 999);
+    startEndTime.end = bookMondayEndTime;
   } else {
     const currentDate = new Date();
     const tomorrowDate = new Date(currentDate);
     tomorrowDate.setDate(currentDate.getDate() + 1);
     tomorrowDate.setHours(0, 0, 0, 0);
-
-    let startEndTime = { start: null, end: null };
+    console.log("tomooorowo", tomorrowDate.getTime());
     startEndTime.start = tomorrowDate.getTime();
     startEndTime.end = getTomorrowEndTime();
     console.log(startEndTime);
-    return startEndTime;
   }
+  return startEndTime;
 }
 
 function getTomorrowEndTime() {
@@ -114,6 +124,6 @@ function getTomorrowEndTime() {
   tomorrowDate.setHours(23, 59, 59, 999);
   return tomorrowDate.getTime();
 }
-cron.schedule('0 0 12 * * *', async () => {
-  await login(process.env.USERMAIL, process.env.USERPASSWORD);
-});
+/* cron.schedule("0 0 12 * * *", async () => { */
+await login(process.env.USERMAIL, process.env.USERPASSWORD);
+/* }); */
