@@ -105,12 +105,7 @@ function unixTimeConvert() {
     bookMondayEndTime.setHours(23, 59, 59, 999);
     startEndTime.end = bookMondayEndTime;
   } else {
-    const currentDate = new Date();
-    const tomorrowDate = new Date(currentDate);
-    tomorrowDate.setDate(currentDate.getDate() + 1);
-    tomorrowDate.setHours(0, 0, 0, 0);
-    console.log("tomooorowo", tomorrowDate.getTime());
-    startEndTime.start = tomorrowDate.getTime();
+    startEndTime.start = getStartTime();
     startEndTime.end = getTomorrowEndTime();
     console.log(startEndTime);
   }
@@ -123,6 +118,13 @@ function getTomorrowEndTime() {
   tomorrowDate.setDate(currentDate.getDate() + 1);
   tomorrowDate.setHours(23, 59, 59, 999);
   return tomorrowDate.getTime();
+}
+function getStartTime(){
+  const currentDate = new Date()
+  const tomorrowDate = new Date(currentDate)
+  tomorrowDate.setDate(currentDate.getDate()+1)
+  tomorrowDate.setHours(0,0,0,0)
+  return tomorrowDate.getTime()
 }
 cron.schedule("0 0 12 * * *", async () => {
   await login(process.env.USERMAIL, process.env.USERPASSWORD);
